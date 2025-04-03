@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$FACK Project</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #ff0000;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ff0000;
+            text-align: center;
+        }
+        
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #ff0000;
+            color: #000;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            margin: 10px;
+            border: 2px solid #ff0000;
+        }
+        
+        .button:hover {
+            background-color: #000;
+            color: #ff0000;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #ff0000;
+        }
+        
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        .social-link {
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid #ff0000;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            box-shadow: 0 0 20px #ff0000;
+            transform: scale(1.05);
+        }
+        
+        .social-link span {
+            font-size: 1.2rem;
+            margin-left: 10px;
+        }
+        
+        .x-icon {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    
+    <div class="container">
+        <h1 class="pulse">$FACK</h1>
+        <p>The community-driven Solana play. We believe the community is stronger than any individual.</p>
+        
+        <div>
+            <a href="#" class="button">BUY NOW</a>
+            <a href="#" class="button">TOKENOMICS</a>
+        </div>
+        
+        <a href="https://x.com/Fack_trump_sol/" target="_blank" class="social-link">
+            <div class="x-icon">𝕏</div>
+            <span>Follow us on X</span>
+        </a>
+    </div>
+
+    <script>
+        // Matrix rain animation
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const dollar = '$';
+        
+        const alphabet = katakana + latin + nums + dollar;
+        
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        
+        const rainDrops = [];
+        
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+        
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#ff0000';
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+        
+        setInterval(draw, 30);
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
